@@ -16,6 +16,7 @@ namespace BusinessLayer
             CreateMap<DataEntity, BaseInfo>();
             CreateMap<Company, CompanyInfo>();
             CreateMap<ArSubledger, ArSubledgerInfo>();
+            CreateMap<Employee, EmployeeInfo>();
         }
     }
 

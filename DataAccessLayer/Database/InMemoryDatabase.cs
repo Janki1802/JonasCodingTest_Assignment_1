@@ -13,14 +13,52 @@ namespace DataAccessLayer.Database
 	{
 		private Dictionary<Tuple<string, string>, DataEntity> DatabaseInstance;
 
-		public InMemoryDatabase()
+        private static int _siteIdCounter = 0;
+        private static int _companyCodeCounter = 0;
+
+        private string GenerateUniqueSiteId()
+        {
+            // Increment a counter and generate a string
+            return $"S{++_siteIdCounter}";
+        }
+
+        private string GenerateUniqueCompanyCode()
+        {
+            // Increment a counter and generate a string
+            return $"C{++_companyCodeCounter}";
+        }
+
+        public InMemoryDatabase()
 		{
 			DatabaseInstance = new Dictionary<Tuple<string, string>, DataEntity>();
 		}
 
 		public bool Insert(T data)
 		{
-			try
+            if (data == null)
+            {
+                throw new ArgumentNullException(nameof(data), "Data cannot be null.");
+            }
+
+            // Check and generate unique SiteId if not provided
+            if (string.IsNullOrWhiteSpace(data.SiteId))
+            {
+                data.SiteId = GenerateUniqueSiteId();
+            }
+
+            // Check and generate unique CompanyCode if not provided
+            if (string.IsNullOrWhiteSpace(data.CompanyCode))
+            {
+                data.CompanyCode = GenerateUniqueCompanyCode();
+            }
+
+            // Ensure uniqueness
+            if (DatabaseInstance.ContainsKey(Tuple.Create(data.SiteId, data.CompanyCode)))
+            {
+                throw new InvalidOperationException("Data with the same SiteId and CompanyCode already exists.");
+            }
+
+            try
 			{
 				DatabaseInstance.Add(Tuple.Create(data.SiteId, data.CompanyCode), data);
 				return true;

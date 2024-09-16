@@ -42,9 +42,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\ICompanyService.cs" />
+    <Compile Include="Interfaces\IEmployeeService.cs" />
     <Compile Include="Models\ArSubledgerInfo.cs" />
     <Compile Include="Models\BaseInfo.cs" />
     <Compile Include="Models\CompanyInfo.cs" />
+    <Compile Include="Models\EmployeeInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
